@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: hostpath-provisioner
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hostpath-provisioner
+    spec:
+      containers:
+        - name: hostpath-provisioner
+          image: titilambert/hostpath-provisioner:1.0
+          securityContext:
+            capabilities:
+              add:
+                - DAC_READ_SEARCH
+          command:
+            - /hostpath-provisioner
+          args:
+            - "-provisioner=kubernetes.io/host-path"
+            - "-pv-root-dir=/data/pvs"
+            - "-default-reclaim-policy=Retain"
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: SERVICE_NAME
+              value: hostpath-provisioner
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: pv-volume
+              mountPath: /data/pvs
+      volumes:
+        - name: pv-volume
+          hostPath:
+            path: /data/pvs
