@@ -6,7 +6,6 @@ import (
 	"os"
 	"path"
 	"time"
-    "fmt"
 
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/nfs-provisioner/controller"

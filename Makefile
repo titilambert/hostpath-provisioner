@@ -1,3 +1,4 @@
+CWD=$(shell pwd)
 VERSION=1.0
 
 deps:

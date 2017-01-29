@@ -1,12 +1,12 @@
-package: github.com/kubernetes-incubator/nfs-provisioner/demo/hostpath-provisioner
+package: github.com/titilambert/hostpath-provisioner
 import:
 - package: github.com/golang/glog
 - package: github.com/kubernetes-incubator/nfs-provisioner
-  version: v1.0.3
+  version: ^1.0.3
   subpackages:
   - controller
 - package: k8s.io/client-go
-  version: v2.0.0-alpha.0-9-g89c6009
+  version: ^2.0.0-alpha.1
   subpackages:
   - kubernetes
   - pkg/api/v1
@@ -14,3 +14,4 @@ import:
   - pkg/util/uuid
   - pkg/util/wait
   - rest
+  - tools/clientcmd
